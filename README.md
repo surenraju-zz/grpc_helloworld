@@ -1,12 +1,9 @@
 # grpc_helloworld
 
-This tutorial provides a basic Go programmer’s introduction to working with gRPC.
 
-By walking through this example you’ll learn how to:
-
-Define a service in a .proto file.
-Generate server and client code using the protocol buffer compiler.
-Use the Go gRPC API to write a simple client and server for your service.
+1. Define a service in a .proto file.
+2. Generate server and client code using the protocol buffer compiler.
+3. Use the Go gRPC API to write a simple client and server for your service.
 
 
 **Why use gRPC?**
