@@ -39,11 +39,30 @@ A *bidirectional streaming RPC* where both sides send a sequence of messages usi
 
 Next we need to generate the gRPC client and server interfaces from our .proto service definition. We do this using the protocol buffer compiler protoc with a special gRPC Go plugin.
 
-From the *grpc_helloworld/greetingservice* directory run :
+To compile Proto file we need to install necessary tools and add packages.
+
+1. Download Proto compiler binaries *protocolbuffers/protobuf*
+2. Extract package to any folder on your PC and add *bin* to PATH environment variable
+3. Create *third_party* folder in the *grpc_helloworld*
+4. Copy everything from Proto compiler *include* folder to *third_party* folder
+5. Install Go language code generator plugin for Proto compiler:
+```
+go get -u github.com/golang/protobuf/protoc-gen-go
+```
+6. Create protoc-gen.cmd (protoc-gen.sh for MacOS/Linux) file in the *third_party* folder
 ```
 protoc --proto_path=greetingservice --proto_path=third_party --go_out=plugins=grpc:greetingservice greetingservice.proto
 ```
-Running this command generates the following file in the greetingservice directory  - *greetingservice.pb.go*
+7. From grpc_helloworld folder run compilation
+```
+.\third_party\protoc-gen.cmd
+```
+
+for MacOS/Linux:
+```
+./third_party/protoc-gen.sh
+```
+It creates *greetingservice.pb.go* file inside *greetingservice* folder
 
 **Creating the server**
 
