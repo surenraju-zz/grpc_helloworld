@@ -67,14 +67,10 @@ Running this command generates the following file in the greetingservice directo
 Once we’ve implemented all our methods, we also need to start up a gRPC server so that clients can actually use our service. The following snippet shows how we do this for our GreetService service
 
 To build and start a server, we:
-	1. Specify the port we want to use to listen for client requests using ```lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))```.
-	2. Create an instance of the gRPC server using grpc.NewServer().
-	3. Register our service implementation with the gRPC server.
-	4. Call Serve() on the server with our port details to do a blocking wait until the process is killed or Stop() is called.
-
-
-
-	
+1. Specify the port we want to use to listen for client requests using ```lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))```.
+2. Create an instance of the gRPC server using grpc.NewServer().
+3. Register our service implementation with the gRPC server.
+4. Call Serve() on the server with our port details to do a blocking wait until the process is killed or Stop() is called.	
 
 ```
 	flag.Parse()
