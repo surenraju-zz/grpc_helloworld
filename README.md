@@ -12,7 +12,7 @@ With gRPC we can define our service once in a .proto file and implement clients 
 
 **Defining the service**
 
-Our first step  is to define the gRPC service and the method request and response types using protocol buffers. You can see the complete .proto file in */grpc_helloworld/blob/master/greetingservice/greetingservice.proto*.
+Our first step  is to define the gRPC service and the method request and response types using protocol buffers. You can see the complete .proto file in */grpc_helloworld/greetingservice/greetingservice.proto*.
 
 To define a service, you specify a named service in your .proto file:
 ```
