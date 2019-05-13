@@ -1,6 +1,5 @@
 # grpc_helloworld
 
-**gRPC Basics - Go**
 This tutorial provides a basic Go programmer’s introduction to working with gRPC.
 
 By walking through this example you’ll learn how to:
