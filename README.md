@@ -49,3 +49,77 @@ protoc --proto_path=greetingservice --proto_path=third_party --go_out=plugins=gr
 ```
 Running this command generates the following file in the greetingservice directory  - *greetingservice.pb.go*
 
+**Creating the server**
+
+**Implement the service interface generated from the service definition**
+
+```
+	type greetServiceServer struct {
+	}
+
+	func (s *greetServiceServer) Greet(ctx context.Context, req *api.GreetRequest) (*api.GreetResponse, error) {
+		return &api.GreetResponse{Greeting: fmt.Sprintf("Hello %s", req.Name)}, nil
+	}
+```
+
+**Run a gRPC server to listen for requests from clients and dispatch them to the right service implementation**
+
+Once we’ve implemented all our methods, we also need to start up a gRPC server so that clients can actually use our service. The following snippet shows how we do this for our GreetService service
+
+To build and start a server, we:
+
+	1. Specify the port we want to use to listen for client requests using ```lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))```.
+	2. Create an instance of the gRPC server using grpc.NewServer().
+	3. Register our service implementation with the gRPC server.
+	4. Call Serve() on the server with our port details to do a blocking wait until the process is killed or Stop() is called.
+
+```
+	flag.Parse()
+	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+
+	grpcServer := grpc.NewServer()
+	api.RegisterGreetServiceServer(grpcServer, &greetServiceServer{})
+	grpcServer.Serve(lis)
+```
+
+Creating the client
+
+To call service methods, we first need to create a gRPC channel to communicate with the server. We create this by passing the server address and port number to grpc.Dial() as follows:
+```
+	conn, err := grpc.Dial(*serverAddr)
+	if err != nil {
+		...
+	}
+	defer conn.Close()
+```
+
+You can use DialOptions to set the auth credentials (e.g., TLS, GCE credentials, JWT credentials) in *grpc.Dial* if the service you request requires that - however, we are not doing it in this tutorial for simplicity. 
+
+Once the gRPC channel is setup, we need a client stub to perform RPCs. We get this using the *NewGreetServiceClient* method provided in the greetingservice package we generated from our .proto.
+
+	```
+	client := api.NewGreetServiceClient(conn)
+	```
+
+**Calling service methods**
+
+Calling the simple RPC GetFeature is nearly as straightforward as calling a local method
+```
+	r := &api.GreetRequest{Name: "Suren"}
+	fmt.Println(client.Greet(ctx, r))
+```
+
+DIY!
+To compile and run the server, assuming you are in the folder *$GOPATH/src/github.com/surenraju/grpc_helloworld*, simply:
+```
+$ go run server/server.go
+```
+
+Likewise, to run the client:
+
+```
+$ go run client/client.go	
+```
