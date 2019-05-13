@@ -41,6 +41,7 @@ A *client-side streaming RPC* where the client writes a sequence of messages and
 A *bidirectional streaming RPC* where both sides send a sequence of messages using a read-write stream. The two streams operate independently, so clients and servers can read and write in whatever order they like.
 
 **Generating client and server code**
+
 Next we need to generate the gRPC client and server interfaces from our .proto service definition. We do this using the protocol buffer compiler protoc with a special gRPC Go plugin.
 
 From the *grpc_helloworld/greetingservice* directory run :
