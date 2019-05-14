@@ -129,11 +129,11 @@ Calling the simple RPC GetFeature is nearly as straightforward as calling a loca
 DIY!
 To compile and run the server, assuming you are in the folder *$GOPATH/src/github.com/surenraju/grpc_helloworld*, simply:
 ```
-$ go run server/server.go
+$ go run server/main.go
 ```
 
 Likewise, to run the client:
 
 ```
-$ go run client/client.go	
+$ go run client/main.go	
 ```
